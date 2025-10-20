@@ -1,0 +1,26 @@
+from setuptools import find_packages, setup
+import os
+
+HYPEN_E_DOT = "-e ."
+
+def get_requirements(file_path: str) -> list[str]:
+    requirements = []
+    if os.path.exists(file_path):
+        with open(file_path) as file_obj:
+            requirements = file_obj.readlines()
+            requirements = [req.strip() for req in requirements]
+            # Remove '-e .' from the list if present
+            if HYPEN_E_DOT in requirements:
+                requirements.remove(HYPEN_E_DOT)
+    else:
+        print(f"Warning: {file_path} does not exist.")
+    return requirements
+
+setup(
+    name='mlproject',
+    version='0.0.1',
+    author='Satyam',
+    author_email='satyamdkothawade@gmail.com',
+    packages=find_packages(),
+    install_requires=get_requirements("requirements.txt")  # Corrected filename
+)
